@@ -1,0 +1,13 @@
+**/cmake-build-debug/
+**/.idea/
+**/mtm_pirate
+**/Mvidia
+**/MvidiaTest
+**/test_results.html
+cmake-build-debug/
+.idea/
+*.exe
+*.o
+*.obj
+*.docx*.tmp
+/CMakeLists.txt
