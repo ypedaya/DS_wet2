@@ -1,15 +1,16 @@
-#include "wet1util.h"
+#include "wet2util.h"
 #pragma once
 template<class T>
 class AVLtree {
-    friend class Rooms_Tree;
-    friend class Guests_Tree;
-    friend class DiningRoom;
+
+    friend class GroupsTreeId;
+    friend class GroupsTreeMotivation;
 
 private:
     struct node {
         int key = 0;
         int height = 0;
+
         T value;
         node* leftSon = nullptr;
         node* rightSon = nullptr;
