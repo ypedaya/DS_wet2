@@ -3,8 +3,8 @@
 template<class T>
 class AVLtree {
 
-    friend class GroupsTreeId;
-    friend class GroupsTreeMotivation;
+    friend class TeamsTreeId;
+    friend class TeamsTreeMotivation;
 
 private:
     struct node {
@@ -172,6 +172,7 @@ public:
                 temp->height = 1 + rightHeight;
             }
             int bf = getBF(temp);
+            updateExtraData(temp);
             if (bf > 1 || bf < -1) {
                 if (bf > 1) {
                     if (getBF(temp->leftSon) >= 0) {
@@ -211,6 +212,14 @@ public:
 
     bool contains(int key) const {
         return find(key) != nullptr;
+    }
+    node* find_min() const {
+        if(root == nullptr)
+            return nullptr;
+        node* current = root;
+        while (current->leftSon != nullptr)
+            current = current->leftSon;
+        return current;
     }
 
     int getNumNodes() const {

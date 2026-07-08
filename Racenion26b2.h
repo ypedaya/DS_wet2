@@ -13,17 +13,19 @@
 #ifndef RACENION26B2_H_
 #define RACENION26B2_H_
 #include "contestantsArray.h"
-#include "GroupsTreeMotivation.h"
+#include "TeamsTreeMotivation.h"
 #include "StructsDef.h"
 #include "wet2util.h"
 
 
 class Racenion {
 private:
-	GroupsTreeMotivation* motivation_tree;
-	GroupsTreeId* id_tree;
-	contestantsArray* contestants;
-	UnionFind<Group, contestant> union_find;
+	TeamsTreeMotivation* motivation_tree = nullptr;
+	TeamsTreeId* id_tree = nullptr;
+	contestantsArray* contestants = nullptr;
+	UnionFind<Team, contestant> union_find;
+	static void updateGroupAfterCompression(UnionFind<Team, contestant>::GroupNode* current, UnionFind<Team, contestant>::GroupNode* updated_old_parent);
+	static void updateElementAfterCompression(UnionFind<Team, contestant>::ElementNode* element, UnionFind<Team, contestant>::GroupNode* old_group);
 
 public:
 	// <DO-NOT-MODIFY> {

@@ -13,10 +13,10 @@ add_executable(DS_wet2_Spring_2026
     wet2util.h
         DynamicArray.h
         UnionFind.h
-        GroupsTreeId.h
-        GroupsTreeId.cpp
-        GroupsTreeMotivation.h
-        GroupsTreeMotivation.cpp
+        TeamsTreeId.h
+        TeamsTreeId.cpp
+        TeamsTreeMotivation.h
+        TeamsTreeMotivation.cpp
         contestantsArray.h
         StructsDef.h
         contestantsArray.cpp)
