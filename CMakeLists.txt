@@ -18,4 +18,5 @@ add_executable(DS_wet2_Spring_2026
         GroupsTreeMotivation.h
         GroupsTreeMotivation.cpp
         contestantsArray.h
-        GroupType.h)
+        StructsDef.h
+        contestantsArray.cpp)

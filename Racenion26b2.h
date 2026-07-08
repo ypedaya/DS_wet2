@@ -12,14 +12,18 @@
 
 #ifndef RACENION26B2_H_
 #define RACENION26B2_H_
+#include "contestantsArray.h"
+#include "GroupsTreeMotivation.h"
+#include "StructsDef.h"
 #include "wet2util.h"
 
 
 class Racenion {
 private:
-	//
-	// Here you may add anything you need to implement your Racenion class
-	//
+	GroupsTreeMotivation* motivation_tree;
+	GroupsTreeId* id_tree;
+	contestantsArray* contestants;
+	UnionFind<Group, contestant> union_find;
 
 public:
 	// <DO-NOT-MODIFY> {

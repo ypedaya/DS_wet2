@@ -16,18 +16,28 @@ private:
         node* rightSon = nullptr;
         node* parent = nullptr;
     };
-
+    void (*update_function)(node*) = nullptr;
     int num_node = 0; //total nodes
     node* root = nullptr;
 
-public:
-    AVLtree() = default;
+    void updateExtraData(node* current)
+    {
+        if (current != nullptr && update_function != nullptr) {
+            update_function(current);
+        }
+    }
 
+public:
+    explicit AVLtree(void (*func)(node*) = nullptr)
+    : update_function(func)
+    {
+    }
     ~AVLtree() {
         this->clearTree(root);
     }
 
-    AVLtree(const AVLtree &t) : num_node(t.num_node) {
+    AVLtree(const AVLtree& t): num_node(t.num_node), update_function(t.update_function)
+    {
         this->root = copyNodes(t.root, nullptr);
     }
 
@@ -39,6 +49,7 @@ public:
         clearTree(this->root);
         this->root = newRoot;
         this->num_node = t.num_node;
+        this->update_function = t.update_function;
         return *this;
     }
 
@@ -52,6 +63,7 @@ public:
         if (root == nullptr) {
             root = newNode;
             num_node++;
+            updateExtraData(root);
             return;
         }
         node* current = root;
@@ -78,6 +90,7 @@ public:
             }
         }
         num_node++;
+        updateExtraData(newNode);
         node* temp = newNode->parent;
         while (temp != nullptr) {
             int leftHeight = getHeight(temp->leftSon);
@@ -87,6 +100,7 @@ public:
             } else {
                 temp->height = 1 + rightHeight;
             }
+            updateExtraData(temp);
             int bf = getBF(temp);
             if (bf > 1 || bf < -1) {
                 if (bf > 1) {
@@ -325,6 +339,8 @@ private:
         } else {
             A->height = 1 + aRightHeight;
         }
+        updateExtraData(v);
+        updateExtraData(A);
         return A;
     }
 
@@ -384,6 +400,8 @@ private:
         } else {
             b->height = 1 + v->height;
         }
+        updateExtraData(v);
+        updateExtraData(b);
         return b;
     }
 
