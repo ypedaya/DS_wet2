@@ -3,12 +3,31 @@
 //
 
 #include "GroupsTreeId.h"
+
+#include "GroupsTreeMotivation.h"
+
 GroupsTreeId::~GroupsTreeId() {
 
 }
 
 
-void GroupsTreeId::insert(int groupId) {
+StatusType GroupsTreeId::insert(int groupId) {
+    if(groupId <= 0) {
+        return StatusType::INVALID_INPUT;
+    }
+    if(groups_tree->find(groupId) != nullptr) {
+        return StatusType::FAILURE;
+    }
+    Group* node = new Group();
+    node->groupId = groupId;
+    try {
+        groups_tree->insert(groupId, node);
+    }
+    catch (std::exception &e) {
+        delete node;
+        return StatusType::ALLOCATION_ERROR;
+    }
+
 
 }
 
@@ -20,6 +39,6 @@ bool GroupsTreeId::contains(int groupId) const {
 
 }
 
-AVLtree<Group*>::node* GroupsTreeId::find(int groupId) const {
-
+Group* GroupsTreeId::find(int groupId) const {
+    return groups_tree->find(groupId)->value;
 }

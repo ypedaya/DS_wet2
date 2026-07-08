@@ -5,16 +5,16 @@
 #include "AVLtree.h"
 #include "UnionFind.h"
 #include "wet2util.h"
-#include "GroupType.h"
+#include "StructsDef.h"
 #pragma once
 
 class GroupsTreeMotivation {
     friend class GroupsTreeId;
 
-    AVLtree<GroupMotivation*>* groups_tree;
+    AVLtree<GroupMotivation*> groups_tree;
 
 public:
-    GroupsTreeMotivation() = default;
+    GroupsTreeMotivation();
 
     ~GroupsTreeMotivation();
 
@@ -22,12 +22,13 @@ public:
 
     GroupsTreeMotivation &operator=(const GroupsTreeMotivation &) = delete;
 
-    void insert(int total_motivation, Group* group);
+    StatusType insert(int total_motivation, int groupId);
 
-    void remove(int total_motivation);
+    StatusType remove(int total_motivation, int GroupId);
 
     AVLtree<GroupMotivation*>::node* find(int total_motivation) const;
 
+    static void updateSubSumNode(AVLtree<GroupMotivation*>::node* current);
 
 };
 

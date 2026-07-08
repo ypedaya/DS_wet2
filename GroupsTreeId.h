@@ -3,7 +3,7 @@
 #include "UnionFind.h"
 #include "wet2util.h"
 #pragma once
-#include "GroupType.h"
+#include "StructsDef.h"
 
 class GroupsTreeId {
     friend class GroupsTreeMotivation;
@@ -19,13 +19,13 @@ public:
 
     GroupsTreeId &operator=(const GroupsTreeId &) = delete;
 
-    void insert(int groupId);
+    StatusType insert(int groupId);
 
     void remove(int groupId);
 
     bool contains(int groupId) const;
 
-    AVLtree<Group*>::node* find(int groupId) const;
+    Group* find(int groupId) const;
 
 
 };

@@ -28,17 +28,19 @@ public:
     UnionFind() = default;
     ~UnionFind() = default;
 
-    void makeSet(GroupType* group_data) {
-        GroupNode* node;
+    GroupNode* makeSet(GroupType* group_data) {
+        GroupNode* node = new GroupNode();
         node->group = group_data;
         node->parent = nullptr;
+        return node;
     }
 
-    void addElement(ElementType* element_data, GroupNode* group) {
-        ElementNode* node;
+    ElementNode* addElement(ElementType* element_data, GroupNode* group) {
+        ElementNode* node = new ElementNode();
         node->element = element_data;
         node->group = group;
         group->size++;
+        return node;
     }
 
     GroupNode* find(ElementNode* element) {

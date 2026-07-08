@@ -23,7 +23,8 @@ public:
     bool empty() const;
 
     T& operator[](int index);
-    const T& operator[](int index) const;
+    const T& operator[](int index) const;//הנחתי שאם אני ניגדשת arr[] ולא קיים איבר כזה הוא מחזיר לי nullPtr
+    void remove(int index);
 
     //bool operator==(const DynamicArray& other) const;
     //bool operator!=(const DynamicArray& other) const;
