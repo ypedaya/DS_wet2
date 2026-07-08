@@ -3,6 +3,12 @@
 //
 
 #include "contestantsArray.h"
+contestantsArray::~contestantsArray()
+{
+    for (int i = 0; i < arr.size(); i++) {
+        delete arr[i];
+    }
+}
 
 StatusType contestantsArray::insert(int id, int teamId, const Skill &skill, int motivation, int missionHad) {
 
@@ -17,9 +23,9 @@ StatusType contestantsArray::insert(int id, int teamId, const Skill &skill, int 
         to_insert = new contestant();
         to_insert->id = id;
         to_insert->motivation = motivation;
-        to_insert->skill = skill;
+        to_insert->skill = *skill;
         to_insert->mission_dif = missionHad;
-        to_insert->skill_diff = skill;
+        to_insert->skill_diff = *skill;
         arr[id] =  to_insert;
     }
     catch (std::exception &e) {
