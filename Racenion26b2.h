@@ -23,9 +23,9 @@ private:
 	TeamsTreeMotivation* motivation_tree = nullptr;
 	TeamsTreeId* id_tree = nullptr;
 	contestantsArray* contestants = nullptr;
-	UnionFind<Team, contestant> union_find;
-	static void updateGroupAfterCompression(UnionFind<Team, contestant>::GroupNode* current, UnionFind<Team, contestant>::GroupNode* updated_old_parent);
-	static void updateElementAfterCompression(UnionFind<Team, contestant>::ElementNode* element, UnionFind<Team, contestant>::GroupNode* old_group);
+	UnionFind<Team, Contestant> union_find;
+	static void updateGroupAfterCompression(UnionFind<Team, Contestant>::GroupNode* current, UnionFind<Team, Contestant>::GroupNode* updated_old_parent);
+	static void updateElementAfterCompression(UnionFind<Team, Contestant>::ElementNode* element, UnionFind<Team, Contestant>::GroupNode* old_group);
 
 public:
 	// <DO-NOT-MODIFY> {
