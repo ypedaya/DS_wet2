@@ -30,7 +30,6 @@ void TeamsTreeMotivation::deleteValues(
     current->value = nullptr;
 }
 
-
 StatusType TeamsTreeMotivation::insert(int total_motivation, int groupId)
 {
     AVLtree<TeamMotivation*>::node* tree_node = teams_tree.find(total_motivation);
@@ -52,6 +51,7 @@ StatusType TeamsTreeMotivation::insert(int total_motivation, int groupId)
         to_insert = new TeamMotivation();
         to_insert->num_app = 1;
         to_insert->sum = 1;
+        to_insert->teamsId.insert(groupId, groupId);
         teams_tree.insert(total_motivation, to_insert);
     }
     catch (const std::bad_alloc&)
@@ -83,10 +83,15 @@ StatusType TeamsTreeMotivation::remove(int total_motivation, int TeamId)
     {
         node->value->num_app--;
         node->value->teamsId.remove(TeamId);
+        AVLtree<TeamMotivation*>::node* current = node;
+        while (current != nullptr)
+        {
+            updateSubSumNode(current);
+            current = current->parent;
+        }
     }
     return StatusType::SUCCESS;
 }
-
 
 void TeamsTreeMotivation::updateSubSumNode(AVLtree<TeamMotivation*>::node* current)
 {

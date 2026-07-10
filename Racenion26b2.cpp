@@ -158,6 +158,9 @@ output_t<int> Racenion::get_contestant_missions_number(int contestantId)
 	Contestant* contestant_node = contestants->find(contestantId);
 	if (contestant_node == nullptr)
 		return StatusType::FAILURE;
+
+	contestant_node->union_node->data = contestant_node;
+
 	UnionFind<Team, Contestant>::GroupNode* node = union_find.find(contestant_node->union_node);
 	return node->data->mission_had + contestant_node->mission_dif;
 }
@@ -187,6 +190,7 @@ output_t<Skill> Racenion::get_partial_team_skill(int contestantId)
 	Contestant* contestant_node = contestants->find(contestantId);
 	if (contestant_node == nullptr)
 		return StatusType::FAILURE;
+	contestant_node->union_node->data = contestant_node;
 	UnionFind<Team, Contestant>::GroupNode* node = union_find.find(contestant_node->union_node);
 	if (node->data->activeTeam == false)
 	{

@@ -11,7 +11,7 @@ void contestantsArray::rehash()
 
     try
     {
-        array = new Node*[currentCapacity];
+        array = new Node*[currentCapacity]();
 
         for (int i = 0; i < oldCapacity; ++i)
         {
