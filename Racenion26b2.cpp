@@ -107,6 +107,47 @@ StatusType Racenion::add_contestant(int contestantId, int teamId, const Skill& s
 
 output_t<int> Racenion::duel(int teamId1, int teamId2)
 {
+	if (teamId1 <= 0 || teamId2 <= 0 || teamId1 == teamId2)
+	{
+		return StatusType::INVALID_INPUT;
+	}
+	Team* team1 = id_tree->find(teamId1);
+	Team* team2 = id_tree->find(teamId2);
+	if (team1 == nullptr || team2 == nullptr)
+	{
+		return StatusType::FAILURE;
+	}
+	if (team1->union_node->size == 0 || team2->union_node->size == 0)
+	{
+		return StatusType::FAILURE;
+	}
+	team1->mission_had++;
+	team2->mission_had++;
+	int scoreTeam1 = team1->experience + team1->total_motivation;
+	int scoreTeam2 = team2->experience + team2->total_motivation;
+
+	if (scoreTeam1 > scoreTeam2)
+	{
+		team1->experience += 3;
+		return 1;
+	}
+	if (scoreTeam2 > scoreTeam1)
+	{
+		team2->experience += 3;
+		return 3;
+	}
+	if (team1->total_skill > team2->total_skill)
+	{
+		team1->experience += 3;
+		return 2;
+	}
+	if (team2->total_skill > team1->total_skill)
+	{
+		team2->experience += 3;
+		return 4;
+	}
+	team1->experience++;
+	team2->experience++;
 	return 0;
 }
 
