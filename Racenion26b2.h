@@ -14,6 +14,7 @@
 #define RACENION26B2_H_
 #include "contestantsArray.h"
 #include "TeamsTreeMotivation.h"
+#include "TeamsTreeId.h"
 #include "StructsDef.h"
 #include "wet2util.h"
 

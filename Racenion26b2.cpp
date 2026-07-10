@@ -52,7 +52,25 @@ StatusType Racenion::add_team(int teamId)
 
 StatusType Racenion::remove_team(int teamId)
 {
-	return StatusType::FAILURE;
+	if (teamId <= 0)
+	{
+		return StatusType::INVALID_INPUT;
+	}
+
+	Team* toRemove = id_tree->find(teamId);
+	if (toRemove == nullptr)
+	{
+		return StatusType::FAILURE;
+	}
+
+	int motivation = toRemove->total_motivation;
+
+	toRemove->activeTeam = false;
+
+	motivation_tree->remove(motivation, teamId);
+	id_tree->remove(teamId);
+
+	return StatusType::SUCCESS;
 }
 
 StatusType Racenion::add_contestant(int contestantId, int teamId, const Skill& skill, int motivation, int missionsHad)
