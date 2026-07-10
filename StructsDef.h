@@ -18,6 +18,7 @@ struct Team
     int mission_had = 0;
     int total_motivation = 0;
     UnionFind<Team, Contestant>::GroupNode* union_node = nullptr;
+    bool activeTeam = true;
 };
 
 struct TeamMotivation

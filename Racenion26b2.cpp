@@ -129,7 +129,7 @@ output_t<Skill> Racenion::get_partial_team_skill(int contestantId)
 	if (contestant_node == nullptr)
 		return StatusType::FAILURE;
 	UnionFind<Team, Contestant>::GroupNode* node = union_find.find(contestant_node->union_node);
-	if (node->data == nullptr)
+	if (node->data->activeTeam == false)
 	{
 		return StatusType::FAILURE;
 	}

@@ -30,7 +30,7 @@ public:
     StatusType insert(int id, int teamId, const Skill& skill, int motivation, int missionHad);
     bool contains(int id) const;
     Contestant* find(int id) const;
-    void remove(int id); // no contestant should be removed
+    void remove(int id);
     int getSize() const;
     int getCapacity() const;
 };

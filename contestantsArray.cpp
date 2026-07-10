@@ -3,28 +3,38 @@
 void contestantsArray::rehash()
 {
     int oldCapacity = currentCapacity;
+    int oldSize = currentSize;
     Node** oldArray = array;
 
     currentCapacity *= 2;
-
-    array = new Node*[currentCapacity];
     currentSize = 0;
 
-    for (int i = 0; i < oldCapacity; ++i)
+    try
     {
-        Node* current = oldArray[i];
+        array = new Node*[currentCapacity];
 
-        while (current != nullptr)
+        for (int i = 0; i < oldCapacity; ++i)
         {
-            Node* nextNode = current->next;
-            int newIndex = hashFunc(current->contestantID);
-            current->next = array[newIndex];
-            array[newIndex] = current;
-            currentSize++;
-            current = nextNode;
+            Node* current = oldArray[i];
+
+            while (current != nullptr)
+            {
+                Node* nextNode = current->next;
+                int newIndex = hashFunc(current->contestantID);
+                current->next = array[newIndex];
+                array[newIndex] = current;
+                currentSize++;
+                current = nextNode;
+            }
         }
+        delete[] oldArray;
     }
-    delete[] oldArray;
+    catch (std::exception& e)
+    {
+        array = oldArray;
+        currentCapacity = oldCapacity;
+        currentSize = oldSize;
+    }
 }
 
 int contestantsArray::hashFunc(int id) const
@@ -114,7 +124,28 @@ Contestant* contestantsArray::find(int id) const
 
 void contestantsArray::remove(int id)
 {
-    arr.remove(id);
+    int hashedId = hashFunc(id);
+    Node* current = array[hashedId];
+    Node* prev = nullptr;
+    while (current != nullptr && id != current->contestantID)
+    {
+        prev = current;
+        current = current->next;
+    }
+    if (current == nullptr)
+    {
+        return;
+    }
+    if (prev == nullptr)
+    {
+        array[hashedId] = current->next;
+    }
+    else
+    {
+        prev->next = current->next;
+    }
+    delete current;
+    currentSize--;
 }
 
 int contestantsArray::getSize() const
