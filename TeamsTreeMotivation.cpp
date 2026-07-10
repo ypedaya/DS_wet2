@@ -138,7 +138,11 @@ int TeamsTreeMotivation::findByIndex(int i)
         }
         else if (i <= left_sum + current->value->num_app)
         {
-            return current->value->teamsId.find_min()->key;
+            int rank = i - left_sum;
+            AVLtree<int>::node* n = current->value->teamsId.find_min();
+            for (int j = 1; j < rank; j++)
+                n = current->value->teamsId.nextBiggerNode(n);
+            return n->key;
         }
         else
         {
