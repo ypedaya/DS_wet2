@@ -82,7 +82,7 @@ StatusType Racenion::add_contestant(int contestantId, int teamId, const Skill& s
 	Team* assigned_team = assigned_group->data.get();
 	Skill new_total_skill = group->total_skill * skill;
 	contestant_node->mission_dif = missionsHad - assigned_team->mission_had;
-	contestant_node->skill_diff = assigned_team->Base_skill.inv() * new_total_skill;
+	contestant_node->skill_diff = assigned_team->Base_skill.inv() * skill;
 	group->total_skill = new_total_skill;
 	return StatusType::SUCCESS;
 }
