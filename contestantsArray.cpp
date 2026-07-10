@@ -6,9 +6,10 @@ void contestantsArray::rehash()
 
 int contestantsArray::hashFunc(int id) const
 {
+    return id % currentCapacity;
 }
 
-contestantsArray::contestantsArray() : currentSize(0), currentCapacity(16), loadFactor(0.75), array(new Node*[currentCapacity]())
+contestantsArray::contestantsArray() : currentSize(0), currentCapacity(10), loadFactor(0.75), array(new Node*[currentCapacity]())
 {
 }
 
@@ -44,20 +45,26 @@ StatusType contestantsArray::insert(int id, int teamId, const Skill& skill, int 
     {
         return StatusType::FAILURE;
     }
-    Contestant* to_insert;
+    Contestant to_insert;
     try
     {
-        to_insert = new Contestant();
-        to_insert->id = id;
-        to_insert->motivation = motivation;
-        to_insert->skill = *skill;
-        to_insert->mission_dif = missionHad;
-        to_insert->skill_diff = *skill;
-        arr[id] = to_insert;
+        to_insert.id = id;
+        to_insert.motivation = motivation;
+        to_insert.skill = *skill;
+        to_insert.mission_dif = missionHad;
+        to_insert.skill_diff = *skill;
+        int hashedId = hashFunc(id);
+        Node* toInsert = new Node(id, to_insert, array[hashedId]);
+        array[hashedId] = toInsert;
+        currentSize++;
+
+        if (getSize() > loadFactor * getCapacity())
+        {
+            rehash();
+        }
     }
     catch (std::exception& e)
     {
-        delete to_insert;
         return StatusType::ALLOCATION_ERROR;
     }
     return StatusType::SUCCESS;
@@ -65,7 +72,7 @@ StatusType contestantsArray::insert(int id, int teamId, const Skill& skill, int 
 
 bool contestantsArray::contains(int id) const
 {
-    return !(find(id) == nullptr);
+    return find(id) != nullptr;
 }
 
 Contestant* contestantsArray::find(int id) const
@@ -87,3 +94,12 @@ void contestantsArray::remove(int id)
     arr.remove(id);
 }
 
+int contestantsArray::getSize() const
+{
+    return this->currentSize;
+}
+
+int contestantsArray::getCapacity() const
+{
+    return this->currentCapacity;
+}

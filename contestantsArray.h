@@ -31,6 +31,8 @@ public:
     bool contains(int id) const;
     Contestant* find(int id) const;
     void remove(int id); // no contestant should be removed
+    int getSize() const;
+    int getCapacity() const;
 };
 
 
