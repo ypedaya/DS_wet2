@@ -42,7 +42,7 @@ int contestantsArray::hashFunc(int id) const
     return id % currentCapacity;
 }
 
-contestantsArray::contestantsArray() : currentSize(0), currentCapacity(10), loadFactor(0.75), array(new Node*[currentCapacity]())
+contestantsArray::contestantsArray() : currentSize(0), currentCapacity(100), loadFactor(0.75), array(new Node*[currentCapacity]())
 {
 }
 
@@ -64,8 +64,8 @@ contestantsArray::~contestantsArray()
                 current = nextNode;
             }
         }
-        delete[] array;
     }
+    delete[] array;
 }
 
 StatusType contestantsArray::insert(int id, int teamId, const Skill& skill, int motivation, int missionHad)
@@ -118,6 +118,7 @@ Contestant* contestantsArray::find(int id) const
         {
             return &current->contestant;
         }
+        current = current->next;
     }
     return nullptr;
 }
