@@ -7,28 +7,35 @@
 #include "TeamsTreeMotivation.h"
 
 
-
-StatusType TeamsTreeId::insert(int groupId) {
-    if(groupId <= 0) {
+StatusType TeamsTreeId::insert(int groupId)
+{
+    if (groupId <= 0)
+    {
         return StatusType::INVALID_INPUT;
     }
-    if(groups_tree.find(groupId) != nullptr) {
+    if (groups_tree.find(groupId) != nullptr)
+    {
         return StatusType::FAILURE;
     }
-    try {
+    try
+    {
         std::shared_ptr<Team> node = std::make_shared<Team>();
         node->groupId = groupId;
         groups_tree.insert(groupId, node);
     }
-    catch (std::exception &e) {
+    catch (std::exception& e)
+    {
         return StatusType::ALLOCATION_ERROR;
     }
+    return StatusType::SUCCESS;
 }
 
 
-Team* TeamsTreeId::find(int groupId) const {
+Team* TeamsTreeId::find(int groupId) const
+{
     AVLtree<std::shared_ptr<Team>>::node* tree_node = groups_tree.find(groupId);
-    if (tree_node == nullptr) {
+    if (tree_node == nullptr)
+    {
         return nullptr;
     }
     return tree_node->value.get();
@@ -37,7 +44,8 @@ Team* TeamsTreeId::find(int groupId) const {
 std::shared_ptr<Team> TeamsTreeId::findShared(int groupId) const
 {
     AVLtree<std::shared_ptr<Team>>::node* tree_node = groups_tree.find(groupId);
-    if (tree_node == nullptr) {
+    if (tree_node == nullptr)
+    {
         return nullptr;
     }
     return tree_node->value;
@@ -45,11 +53,13 @@ std::shared_ptr<Team> TeamsTreeId::findShared(int groupId) const
 
 StatusType TeamsTreeId::remove(int teamId)
 {
-    if (teamId <= 0) {
+    if (teamId <= 0)
+    {
         return StatusType::INVALID_INPUT;
     }
 
-    if (groups_tree.find(teamId) == nullptr) {
+    if (groups_tree.find(teamId) == nullptr)
+    {
         return StatusType::FAILURE;
     }
 

@@ -83,9 +83,9 @@ StatusType contestantsArray::insert(int id, int teamId, const Skill& skill, int 
     {
         to_insert.id = id;
         to_insert.motivation = motivation;
-        to_insert.skill = *skill;
+        to_insert.skill = skill;
         to_insert.mission_dif = missionHad;
-        to_insert.skill_diff = *skill;
+        to_insert.skill_diff = skill;
         int hashedId = hashFunc(id);
         Node* toInsert = new Node(id, to_insert, array[hashedId]);
         array[hashedId] = toInsert;
