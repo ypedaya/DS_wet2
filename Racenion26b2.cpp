@@ -186,16 +186,25 @@ StatusType Racenion::recruit(int recruitingTeamId, int recruitedTeamId)
 	else
 	{
 		Skill new_B_base = A_total_skill * B_base_skill;
+
+		int missionsA = A_group_node->data->mission_had;
+		int missionsB = B_group_node->data->mission_had;
+
+		std::shared_ptr<Team> temp = A_group_node->data;
+		A_group_node->data = B_group_node->data;
+		B_group_node->data = temp;
+
 		B_group_node->size = new_size;
 		B_group_node->data->experience = new_exp;
 		B_group_node->data->total_motivation = new_total_motivation;
 		B_group_node->data->total_skill = new_total_skill;
-		A_group_node->data->Base_skill = new_B_base.inv() * A_base_skill;
+		B_group_node->data->mission_had = missionsB;
+		B_group_node->data->union_node = B_group_node;
 		B_group_node->data->Base_skill = new_B_base;
-		A_group_node->data->mission_diff = A_group_node->data->mission_had - B_group_node->data->mission_had;
-		B_group_node->data->groupId = recruitingTeamId;
+
+		A_group_node->data->mission_diff = missionsA - missionsB;
+		A_group_node->data->Base_skill = new_B_base.inv() * A_base_skill;
 		A_group_node->parent = B_group_node;
-		recruitingTeam->union_node = B_group_node;
 	}
 	id_tree->remove(recruitedTeamId);
 	return StatusType::SUCCESS;
