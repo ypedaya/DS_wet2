@@ -2,6 +2,29 @@
 
 void contestantsArray::rehash()
 {
+    int oldCapacity = currentCapacity;
+    Node** oldArray = array;
+
+    currentCapacity *= 2;
+
+    array = new Node*[currentCapacity];
+    currentSize = 0;
+
+    for (int i = 0; i < oldCapacity; ++i)
+    {
+        Node* current = oldArray[i];
+
+        while (current != nullptr)
+        {
+            Node* nextNode = current->next;
+            int newIndex = hashFunc(current->contestantID);
+            current->next = array[newIndex];
+            array[newIndex] = current;
+            currentSize++;
+            current = nextNode;
+        }
+    }
+    delete[] oldArray;
 }
 
 int contestantsArray::hashFunc(int id) const
