@@ -51,6 +51,7 @@ StatusType TeamsTreeMotivation::insert(int total_motivation, int groupId)
         to_insert = new TeamMotivation();
         to_insert->num_app = 1;
         to_insert->sum = 1;
+        to_insert->teamsId.setUpdateFunction(&TeamsTreeMotivation::updateTeamsIdSize);
         to_insert->teamsId.insert(groupId, groupId);
         teams_tree.insert(total_motivation, to_insert);
     }
@@ -139,10 +140,24 @@ int TeamsTreeMotivation::findByIndex(int i)
         else if (i <= left_sum + current->value->num_app)
         {
             int rank = i - left_sum;
-            AVLtree<int>::node* n = current->value->teamsId.find_min();
-            for (int j = 1; j < rank; j++)
-                n = current->value->teamsId.nextBiggerNode(n);
-            return n->key;
+            AVLtree<int>::node* n = current->value->teamsId.root;
+            while (n != nullptr)
+            {
+                int leftSize = (n->leftSon != nullptr) ? n->leftSon->value : 0;
+                if (rank <= leftSize)
+                {
+                    n = n->leftSon;
+                }
+                else if (rank == leftSize + 1)
+                {
+                    return n->key;
+                }
+                else
+                {
+                    rank -= leftSize + 1;
+                    n = n->rightSon;
+                }
+            }
         }
         else
         {
@@ -151,4 +166,12 @@ int TeamsTreeMotivation::findByIndex(int i)
         }
     }
     return -1;
+}
+
+void TeamsTreeMotivation::updateTeamsIdSize(AVLtree<int>::node* current)
+{
+    if (current == nullptr) return;
+    int left = (current->leftSon != nullptr) ? current->leftSon->value : 0;
+    int right = (current->rightSon != nullptr) ? current->rightSon->value : 0;
+    current->value = 1 + left + right;
 }

@@ -8,7 +8,8 @@
 #include "StructsDef.h"
 #pragma once
 
-class TeamsTreeMotivation {
+class TeamsTreeMotivation
+{
     friend class TeamsTreeId;
 
     AVLtree<TeamMotivation*> teams_tree;
@@ -19,17 +20,19 @@ public:
 
     ~TeamsTreeMotivation();
 
-    TeamsTreeMotivation(const TeamsTreeMotivation &) = delete;
+    TeamsTreeMotivation(const TeamsTreeMotivation&) = delete;
 
-    TeamsTreeMotivation &operator=(const TeamsTreeMotivation &) = delete;
+    TeamsTreeMotivation& operator=(const TeamsTreeMotivation&) = delete;
 
     StatusType insert(int total_motivation, int groupId);
 
     StatusType remove(int total_motivation, int TeamId);
 
     static void updateSubSumNode(AVLtree<TeamMotivation*>::node* current);
+
     int findByIndex(int i);
 
+    static void updateTeamsIdSize(AVLtree<int>::node* current);
 };
 
 

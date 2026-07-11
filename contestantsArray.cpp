@@ -42,7 +42,7 @@ int contestantsArray::hashFunc(int id) const
     return id % currentCapacity;
 }
 
-contestantsArray::contestantsArray() : currentSize(0), currentCapacity(100), loadFactor(0.75), array(new Node*[currentCapacity]())
+contestantsArray::contestantsArray() : currentSize(0), currentCapacity(79), loadFactor(0.75), array(new Node*[currentCapacity]())
 {
 }
 
