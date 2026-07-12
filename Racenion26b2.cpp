@@ -211,10 +211,13 @@ StatusType Racenion::recruit(int recruitingTeamId, int recruitedTeamId)
 	UnionFind<Team, Contestant>::GroupNode* B_group_node = recruitedTeam->union_node;
 	if (A_group_node->size == 0)
 		return StatusType::FAILURE;
-	int A_total = recruitingTeam->experience + recruitingTeam->total_motivation + recruitingTeam->total_skill.getEffectiveSkill();
-	int B_total = recruitedTeam->experience + recruitedTeam->total_motivation + recruitedTeam->total_skill.getEffectiveSkill();
-	if (B_total >= A_total)
-		return StatusType::FAILURE;
+	if (B_group_node->size != 0)
+	{
+		int A_total = recruitingTeam->experience + recruitingTeam->total_motivation + recruitingTeam->total_skill.getEffectiveSkill();
+		int B_total = recruitedTeam->experience + recruitedTeam->total_motivation + recruitedTeam->total_skill.getEffectiveSkill();
+		if (B_total >= A_total)
+			return StatusType::FAILURE;
+	}
 	int new_total_motivation = A_group_node->data->total_motivation + B_group_node->data->total_motivation;
 	int A_motivation = A_group_node->data->total_motivation;
 	int B_motivation = B_group_node->data->total_motivation;
